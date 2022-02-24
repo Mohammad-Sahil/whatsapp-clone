@@ -1,9 +1,13 @@
 import './App.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Sidebar from './components/Sidebar.jsx'
 
 function App() {
   return (
-    <div className="App">
-        <h1>Hii this is Sahil</h1>
+    <div className="app">
+        <div className="app_body">
+            <Sidebar/>
+        </div>
     </div>
   );
 }
