@@ -18,7 +18,7 @@ function App() {
           <Sidebar/>
             <Routes>
             <Route exact="true" path="/rooms/:roomId" element={<Chat/>} />
-            <Route exact="true" path="/" element={<Chat />}/>
+            {/* <Route exact="true" path="/" element={<Chat />}/> */}
             </Routes>
             </div>
         }

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/sidebar.css';
 import SidebarChat from './SidebarChats';
 import db from '../firebase';
+import { useStateValue } from '../context/StateProvider';
 // import { HomeIcon, IntegrationInstructionsIcon, CodeIcon, ArticleIcon, ViewQuiltIcon, BrushIcon, GroupIcon, GroupsIcon} from '@mui/icons-material/Home';
 // import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 // import CodeIcon from '@mui/icons-material/Code';
@@ -15,6 +16,8 @@ import db from '../firebase';
 
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
+
   useEffect(() => {
     const unsubscribe = db.collection('rooms').onSnapshot(snapshot => (
       setRooms(snapshot.docs.map(doc => (
@@ -24,14 +27,13 @@ function Sidebar() {
         }
       )))
     ));
-    return () => (
-      unsubscribe()
-    )
-  },[])
+  },[]);
+  console.log("DB  DB", db);
+  console.log("db.collection('rooms') >>>", db.collection('rooms'))
   return (
     <div className="sidebar">
       <div className="sidebar_header">
-        <Avatar/>
+        <Avatar src={user?.photoURL}/>
         <div className="sidebar_headerRight">
         <IconButton>
           <DonutLarge/>
@@ -53,6 +55,7 @@ function Sidebar() {
 
       <div className="sidebar_chats">
       <SidebarChat addNewChat/>
+      {console.log("This is the room >>>", rooms)}
       {rooms.map(room => (
         <SidebarChat
           key={room.id}
@@ -60,8 +63,8 @@ function Sidebar() {
           name={room.data.name}
         />
       ))}
-      <SidebarChat/>
-      <SidebarChat/>
+      {/* <SidebarChat/>
+      <SidebarChat/> */}
       </div>
     </div>
   )
